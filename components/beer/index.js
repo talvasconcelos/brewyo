@@ -9,11 +9,9 @@ const Card = styled.div`
   width: 90vw;
   max-width: 780px;
   background: #fff;
-  margin-top: 4em;
-  margin-bottom: 2em;
   padding: 2em;
   border-radius: 5px;
-  box-shadow: 1em 1em 4em rgba(53,80,91,0.8);
+  box-shadow: 1em 1em 4em 1em rgba(53,80,91,0.8);
 
   @media screen and (min-width: 768px) {
     display: grid;
@@ -35,6 +33,20 @@ const Id = styled.h1`
   text-shadow: 0 0 2em rgba(53,80,91,0.8);
 `
 
+const Button = styled.a`
+  display: inline-block;
+  position: relative;
+  margin: 1em auto;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 1.1em;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 5px;
+  background: tomato;
+  padding: 0.5em 0.75em;
+`
+
 const Details = styled.div`
   display: none;
 
@@ -54,8 +66,9 @@ const Beer = ({beers, i}) => (
         <p class='clamp'>{beers[i].description}</p>
       </div>
       <div style='background: pink;'>
-
+        <p>Lorem ipsum dolor sit amet.</p>
       </div>
+
     </Card>
   </div>
 )

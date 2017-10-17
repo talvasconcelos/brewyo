@@ -20,15 +20,9 @@ export default class App extends Component {
 	}
 
 	navClick = e => {
-		console.log(e.target.accessKey)
 		if(this.state.beerIndex === this.state.beers.length - 1 && this.state.beerIndex < 234)
 			this.loadMore()
 		e.target.id === 'left' ? this.state.beerIndex == 0 ? null : this.setState({beerIndex: this.state.beerIndex - 1}) : this.state.beerIndex == this.state.beers.length - 1 ? null : this.setState({beerIndex: this.state.beerIndex + 1})
-	}
-
-	handleKeyDown = e => {
-		e.preventDefault()
-		console.log(e)
 	}
 
 	scrollHandler = (e) => {
@@ -43,8 +37,10 @@ export default class App extends Component {
 			.then(r => this.setState({ beers: [...this.state.beers, ...r], beerIndex: this.state.beerIndex + 1 }))
 	}
 
-	swipe = () => {
-		console.log('jjj')
+	swipe = (direction) => {
+		if(this.state.beerIndex === this.state.beers.length - 1 && this.state.beerIndex < 234)
+			this.loadMore()
+		direction === 'right' ? this.state.beerIndex == 0 ? null : this.setState({beerIndex: this.state.beerIndex - 1}) : this.state.beerIndex == this.state.beers.length - 1 ? null : this.setState({beerIndex: this.state.beerIndex + 1})
 	}
 
 	componentDidMount() {
@@ -55,8 +51,8 @@ export default class App extends Component {
 	render({}, {beers, beerIndex, ...state}) {
 		return (
 			<div id="app">
-				<SwipeContainer>
-					<div class='wrapper' onWheel={this.scrollHandler} onSwipe={this.swipe}>
+				<SwipeContainer onSwipe={this.swipe}>
+					<div class='wrapper' onWheel={this.scrollHandler}>
 						<span id='left' class='navigate nav-left' onClick={this.navClick}>&#10092;</span>
 						<span id='right' class='navigate nav-right' onClick={this.navClick}>&#10093;</span>
 						{(!state.showDetails && beers.length) &&
