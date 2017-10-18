@@ -10,8 +10,6 @@ html, body {
 	width: 100%;
 	padding: 0;
 	margin: 0;
-	background: #FAFAFA;
-	font-family: 'Lato', sans-serif;
 	font-weight: 400;
 	color: #444;
 	-webkit-font-smoothing: antialiased;
@@ -20,6 +18,83 @@ html, body {
 
 * {
 	box-sizing: border-box;
+}
+
+html, .root {
+  font-size: 16px;
+  line-height: 22px;
+}
+body, .article {
+  font-family: 'Lato', sans-serif;
+  font-size: 1em;
+  line-height: 1.375em;
+  margin: auto;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	font-family: Montserrat, sans-serif;
+}
+
+h1, .h1 {
+  font-size: 2.8125em;
+  line-height: 1.46666667em;
+  margin-top: 0.48888889em;
+  margin-bottom: 0.97777778em;
+}
+h2, .h2 {
+  font-size: 2em;
+  line-height: 1.375em;
+  margin-top: 0.6875em;
+  margin-bottom: 0.6875em;
+}
+h3, .h3 {
+  font-size: 1.4375em;
+  line-height: 1.91304348em;
+  margin-top: 0.95652174em;
+  margin-bottom: 0em;
+}
+h4, .h4 {
+  font-size: 1em;
+  line-height: 1.375em;
+  margin-top: 1.375em;
+  margin-bottom: 0em;
+}
+h5, .h5 {
+  font-size: 1em;
+  line-height: 1.375em;
+  margin-top: 1.375em;
+  margin-bottom: 0em;
+}
+p, ul, ol, pre, table, blockquote {
+  margin-top: 0em;
+  margin-bottom: 1.375em;
+}
+ul ul, ol ol, ul ol, ol ul {
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+
+/* Let's make sure all's aligned */
+hr, .hr {
+  border: 1px solid;
+  margin: -1px 0;
+}
+a, b, i, strong, em, small, code {
+  line-height: 0;
+}
+sub, sup {
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
 }
 
 #app {
@@ -39,6 +114,11 @@ html, body {
 	background: #136a8a;  /* fallback for old browsers */
 	background: -webkit-linear-gradient(-270deg, #136a8a, #267871);  /* Chrome 10-25, Safari 5.1-6 */
 	background: linear-gradient(-270deg, #136a8a, #267871); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.btn-wrapper {
+	display: flex;
+	justify-content: center;
 }
 
 .navigate {
@@ -65,7 +145,7 @@ html, body {
 .clamp {
 	overflow: hidden;
 	display: -webkit-box;
-	-webkit-line-clamp: 5;
+	-webkit-line-clamp: 4;
 	-webkit-box-orient: vertical;
 }
 

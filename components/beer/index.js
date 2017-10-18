@@ -1,76 +1,111 @@
 import { h } from 'preact'
 import styled from 'styled-components'
 
-const Card = styled.div`
+const CardContainer = styled.div`
+  margin: 1em auto 0;
   position: relative;
-  display: block;
-  min-height: 66vh;
-  height: 100%;
-  width: 90vw;
-  max-width: 780px;
-  background: #fff;
-  padding: 2em;
-  border-radius: 5px;
-  box-shadow: 1em 1em 4em 1em rgba(53,80,91,0.8);
-
-  @media screen and (min-width: 768px) {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-gap: 1em;
-	}
+  width: 85%;
+  max-width: 768px;
 `
 
-const Id = styled.h1`
-  font-family: beerId;
-  font-size: 6em;
-  letter-spacing: 0.05em;
-  color: #f8a732;
-  position: absolute;
-  top: -60px;
-  left: 0;
-  margin: 0;
-  transform: rotate(-15deg);
-  text-shadow: 0 0 2em rgba(53,80,91,0.8);
+const Card = styled.div`
+  background: #fff;
+  min-height: 60vh;
+  position: relative;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+`
+
+const CardBody = styled.div`
+  display: grid;
+  grid-template-rows: 3fr 0.75fr 0.25fr;
+  padding: 1em;
+`
+
+const Image = styled.div`
+  background: url(${props => props.url});
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  margin: 1em;
 `
 
 const Button = styled.a`
-  display: inline-block;
-  position: relative;
-  margin: 1em auto;
-  color: #fff;
-  font-family: Montserrat, sans-serif;
+  display: block;
+  text-transform: uppercase;
   font-size: 1.1em;
-  text-decoration: none;
-  text-align: center;
-  border-radius: 5px;
+  color: #fff;
   background: tomato;
-  padding: 0.5em 0.75em;
+  margin: 0 auto;
+  border: none;
+  border-radius: 3px;
 `
 
 const Details = styled.div`
-  display: none;
-
-  @media screen and (min-width: 768px) {
-    display: block;
-    background: tomato;
-	}
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
 `
 
 const Beer = ({beers, i}) => (
+  <CardContainer>
+    <Card>
+      <CardBody>
+        <div>
+          <h1>{beers[i].name}</h1>
+          <h3>{beers[i].tagline}</h3>
+          <p>{beers[i].description}</p>
+        </div>
+
+          <Details>
+            <div>
+              <h4>ABV</h4>
+              <p>{beers[i].abv}</p>
+            </div>
+            <div>
+              <h4>IBU</h4>
+              <p>{beers[i].ibu}</p>
+            </div>
+            <div>
+              <h4>SRM</h4>
+              <p>{beers[i].srm}</p>
+            </div>
+          </Details>
+          <Button>Method</Button>
+
+      </CardBody>
+      <Image url={beers[i].image_url} />
+    </Card>
+  </CardContainer>
+)
+/*const Beer = ({beers, i}) => (
   <div>
     <Card>
       <div class='clamp'>
         <Id>#{beers[i].id}</Id>
         <h2 style='font-family: Montserrat, sans-serif;'>{beers[i].name}</h2>
-        <i>{beers[i].tagline}</i>
+        <strong>{beers[i].tagline}</strong>
         <p class='clamp'>{beers[i].description}</p>
       </div>
-      <div style='background: pink;'>
-        <p>Lorem ipsum dolor sit amet.</p>
+      <Details>
+        <div>
+          <strong>ABV: </strong>
+          <span>{beers[i].abv}</span>
+        </div>
+        <div>
+          <strong>IBU: </strong>
+          <span>{beers[i].ibu}</span>
+        </div>
+        <div>
+          <strong>SRM: </strong>
+          <span>{beers[i].srm}</span>
+        </div>
+      </Details>
+      <div class='btn-wrapper'>
+        <Button>Method</Button>
       </div>
-
     </Card>
   </div>
-)
+)*/
 
 export default Beer
