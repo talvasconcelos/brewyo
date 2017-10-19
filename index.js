@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { fetchBeers } from './lib/api'
 
-// import SwipeContainer from './components/swipe'
+import SwipeContainer from './components/swipe'
 import Beer from './components/beer'
 
 
@@ -14,7 +14,7 @@ const SliderContainer = styled.div`
 	position: absolute;
 	top: ${props => props.pos};
 	bottom: 0;
-	min-height: 100vh;
+	min-height: 100%;
 	width: 100%;
 	overflow: hidden;
 	background: tomato;
@@ -65,14 +65,14 @@ export default class App extends Component {
 		return (
 			<div id="app">
 				<SliderContainer pos={currentBeer * -100 + 'vh'} onWheel={this.scrollHandler}>
-					{/* <SwipeContainer onSwipe={this.swipeHandler}> */}
+					<SwipeContainer onSwipe={this.swipeHandler}>
 						<Slider>
 								{beers.map(beer => (
 									<Beer beer={beer} swipe={this.swipeHandler}/>
 								))}
 							{/* <pre>{JSON.stringify({beers}, null, 2)}</pre> */}
 						</Slider>
-					{/* </SwipeContainer> */}
+					</SwipeContainer>
 				</SliderContainer>
 			</div>
 		)
