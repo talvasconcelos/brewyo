@@ -1,82 +1,36 @@
 import { h } from 'preact'
 import styled from 'styled-components'
 
-const CardContainer = styled.div`
-  margin: 1em auto 0;
-  position: relative;
-  width: 85%;
-  max-width: 768px;
-`
+// import SwipeContainer from '../swipe'
 
 const Card = styled.div`
-  background: #fff;
-  min-height: 60vh;
-  position: relative;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
+	margin: 15vh auto;
+	width: 85%;
+	height: 70vh;
+	padding: 1em;
+	background: #eee;
 `
 
 const CardBody = styled.div`
-  display: grid;
-  grid-template-rows: 3fr 0.75fr 0.25fr;
-  padding: 1em;
-`
-
-const Image = styled.div`
-  background: url(${props => props.url});
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  margin: 1em;
-`
-
-const Button = styled.a`
   display: block;
-  text-transform: uppercase;
-  font-size: 1.1em;
-  color: #fff;
-  background: tomato;
-  margin: 0 auto;
-  border: none;
-  border-radius: 3px;
+  position: relative;
+  width: 100%;
 `
 
-const Details = styled.div`
-  display: flex;
-  justify-content: space-around;
-  text-align: center;
+const Title = styled.div`
+  font-size: 0.8rem;
 `
 
-const Beer = ({beers, i}) => (
-  <CardContainer>
+const Beer = ({beer}) => (
     <Card>
       <CardBody>
-        <div>
-          <h1>{beers[i].name}</h1>
-          <h3>{beers[i].tagline}</h3>
-          <p>{beers[i].description}</p>
-        </div>
-
-          <Details>
-            <div>
-              <h4>ABV</h4>
-              <p>{beers[i].abv}</p>
-            </div>
-            <div>
-              <h4>IBU</h4>
-              <p>{beers[i].ibu}</p>
-            </div>
-            <div>
-              <h4>SRM</h4>
-              <p>{beers[i].srm}</p>
-            </div>
-          </Details>
-          <Button>Method</Button>
-
+        <Title>
+          <h2>{beer.name}</h2>
+          <h4>{beer.tagline}</h4>
+        </Title>
+        <article>{beer.description}</article>
       </CardBody>
-      <Image url={beers[i].image_url} />
     </Card>
-  </CardContainer>
 )
 /*const Beer = ({beers, i}) => (
   <div>

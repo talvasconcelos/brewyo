@@ -1,65 +1,79 @@
 import './style'
 import { Component } from 'preact'
+import styled from 'styled-components'
 
 import { fetchBeers } from './lib/api'
-import SwipeContainer from './components/swipe'
 
-
+// import SwipeContainer from './components/swipe'
 import Beer from './components/beer'
 
+
+const data = require('./data.json')
+
+const SliderContainer = styled.div`
+	position: absolute;
+	top: ${props => props.pos};
+	bottom: 0;
+	min-height: 100vh;
+	width: 100%;
+	overflow: hidden;
+	background: tomato;
+	transition: top 0.3s ease;
+`
+
+const Slider = styled.div`
+	display: grid;
+	width: 100%;
+`
+
 export default class App extends Component {
+	constructor () {
+    super()
+		this.swipeHandler = this.swipeHandler.bind(this)
+  }
+
 	state = {
-		fetchPage: 1,
 		beers: [],
-		beerIndex: 0,
-		showDetails: false
+		currentBeer: 0
 	}
 
-	handleClick = (e) => {
-		this.setState({showbeer: !this.state.showbeer, beerId: e})
+	nextBeer() {
+		this.setState(this.state.currentBeer++)
 	}
 
-	navClick = e => {
-		if(this.state.beerIndex === this.state.beers.length - 1 && this.state.beerIndex < 234)
-			this.loadMore()
-		e.target.id === 'left' ? this.state.beerIndex == 0 ? null : this.setState({beerIndex: this.state.beerIndex - 1}) : this.state.beerIndex == this.state.beers.length - 1 ? null : this.setState({beerIndex: this.state.beerIndex + 1})
+	prevBeer() {
+		this.state.currentBeer == 0 ? null : this.setState(this.state.currentBeer--)
 	}
 
 	scrollHandler = (e) => {
-		if(this.state.beerIndex === this.state.beers.length - 1 && this.state.beerIndex < 234)
-			this.loadMore()
-		e.deltaY < 0 ? this.state.beerIndex == 0 ? null : this.setState({beerIndex: this.state.beerIndex - 1}) : this.state.beerIndex == this.state.beers.length - 1 ? null : this.setState({beerIndex: this.state.beerIndex + 1})
+		e.deltaY < 0 ? this.prevBeer() : this.nextBeer()
+		// if(this.state.beerIndex === this.state.beers.length - 1 && this.state.beerIndex < 234)
+		// 	this.loadMore()
+		//e.deltaY < 0 ? this.state.beerIndex == 0 ? null : this.setState({beerIndex: this.state.beerIndex - 1}) : this.state.beerIndex == this.state.beers.length - 1 ? null : this.setState({beerIndex: this.state.beerIndex + 1})
 	}
 
-	loadMore = () => {
-		this.setState({fetchPage: this.state.fetchPage + 1})
-		fetchBeers(`beers?page=${this.state.fetchPage}`)
-			.then(r => this.setState({ beers: [...this.state.beers, ...r], beerIndex: this.state.beerIndex + 1 }))
-	}
-
-	swipe = (direction) => {
-		if(this.state.beerIndex === this.state.beers.length - 1 && this.state.beerIndex < 234)
-			this.loadMore()
-		direction === 'right' ? this.state.beerIndex == 0 ? null : this.setState({beerIndex: this.state.beerIndex - 1}) : this.state.beerIndex == this.state.beers.length - 1 ? null : this.setState({beerIndex: this.state.beerIndex + 1})
+	swipeHandler = (direction) => {
+		direction === 'down' ? this.prevBeer() :
+		direction === 'up' ? this.nextBeer() : null
 	}
 
 	componentDidMount() {
-		fetchBeers(`beers?page=${this.state.fetchPage}`)
-			.then(r => this.setState({ beers: r }))
+		this.setState({beers: data})
 	}
 
-	render({}, {beers, beerIndex, ...state}) {
+	render({}, {beers, currentBeer}) {
 		return (
 			<div id="app">
-				<SwipeContainer onSwipe={this.swipe}>
-					<div class='wrapper' onWheel={this.scrollHandler}>
-						<span id='left' class='navigate nav-left' onClick={this.navClick}>&#10092;</span>
-						<span id='right' class='navigate nav-right' onClick={this.navClick}>&#10093;</span>
-						{(!state.showDetails && beers.length) &&
-							<Beer beers={beers} i={beerIndex}/>
-						}
-					</div>
-				</SwipeContainer>
+				<SliderContainer pos={currentBeer * -100 + 'vh'} onWheel={this.scrollHandler}>
+					{/* <SwipeContainer onSwipe={this.swipeHandler}> */}
+						<Slider>
+								{beers.map(beer => (
+									<Beer beer={beer} swipe={this.swipeHandler}/>
+								))}
+							{/* <pre>{JSON.stringify({beers}, null, 2)}</pre> */}
+						</Slider>
+					{/* </SwipeContainer> */}
+				</SliderContainer>
 			</div>
 		)
 	}

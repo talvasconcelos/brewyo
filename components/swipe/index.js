@@ -8,6 +8,7 @@ export default class SwipeRecognizer extends Component {
   }
 
   componentDidMount () {
+    console.log(this.base)
     this.base.addEventListener('touchstart', this.capture)
     this.base.addEventListener('touchmove', this.capture)
     this.base.addEventListener('touchend', this.compute)
@@ -35,13 +36,13 @@ export default class SwipeRecognizer extends Component {
     const absXTravel = Math.abs(xTravel)
     const absYTravel = Math.abs(yTravel)
 
-    // if (absXTravel < this.tolerance && absYTravel >= this.tolerance) {
-    //   if (yTravel < 0) {
-    //     this.gesture.match = 'up'
-    //   } else {
-    //     this.gesture.match = 'down'
-    //   }
-    // }
+    if (absXTravel < this.tolerance && absYTravel >= this.tolerance) {
+      if (yTravel < 0) {
+        this.gesture.match = 'up'
+      } else {
+        this.gesture.match = 'down'
+      }
+    }
 
     if (absYTravel < this.tolerance && absXTravel >= this.tolerance) {
       if (xTravel < 0) {
