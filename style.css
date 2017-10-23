@@ -96,6 +96,10 @@ sup {
 sub {
   bottom: -0.25em;
 }
+.center {
+	text-align: center;
+	margin: 0 auto;
+}
 
 #app {
 	height: 100%;
@@ -142,6 +146,13 @@ sub {
 	overflow: hidden;
 	display: -webkit-box;
 	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}
+
+.clamped-title {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
 }
 

@@ -7,7 +7,6 @@ import { fetchBeers } from './lib/api'
 import SwipeContainer from './components/swipe'
 import Beer from './components/beer'
 
-
 const data = require('./data.json')
 
 const SliderContainer = styled.div`
@@ -17,7 +16,7 @@ const SliderContainer = styled.div`
 	min-height: 100%;
 	width: 100%;
 	overflow: hidden;
-	background: tomato;
+	background: linear-gradient(-270deg, #136a8a, #267871);
 	transition: top 0.3s ease;
 `
 
@@ -68,7 +67,7 @@ export default class App extends Component {
 					<SwipeContainer onSwipe={this.swipeHandler}>
 						<Slider>
 								{beers.map(beer => (
-									<Beer beer={beer} swipe={this.swipeHandler}/>
+									<Beer beer={beer} />
 								))}
 							{/* <pre>{JSON.stringify({beers}, null, 2)}</pre> */}
 						</Slider>
