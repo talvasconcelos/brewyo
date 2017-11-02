@@ -8,6 +8,7 @@ const Card = styled.div`
 	height: 70vh;
 	padding: 1em;
 	background: #eee;
+	border-radius: 3px;
 	/*@media screen and (min-width: 768px) {
 		width: 75%;
 	}*/
@@ -20,7 +21,9 @@ const CardBody = styled.article`
 	height: 100%;
 
 	@media screen and (min-width: 768px) {
-		width: 67%;
+		display: grid;
+		grid-template-columns: 3fr 1fr;
+		grid-gap: 1em;
 	}
 `
 
@@ -35,16 +38,29 @@ const Details = styled.div`
 	justify-content: space-around;
 `
 
+const Image = styled.div`
+	display: none;
+	width: 0;
+	@media screen and (min-width: 768px) {
+		display: block;
+		width: 100%;
+		background: url(${props => props.image});
+		background-position: center;
+		background-size: contain;
+		background-repeat: no-repeat;
+	}
+`
+
 const Value = styled.p`
 	text-align: center;
 	font-style: italic;
 `
 
-const Button = styled.a`
+const Button = styled.div`
 	display: inline-block;
 	text-transform: uppercase;
+	font-weight: bold;
 	line-height: 3em;
-	vertical-align: middle;
 	letter-spacing: 1px;
 	height: 3em;
 	padding: 0 2em;
@@ -53,65 +69,40 @@ const Button = styled.a`
 	border-radius: 2px;
 	color: #fff;
 	background: tomato;
+	cursor: pointer;
 	-webkit-tap-highlight-color: transparent;
 `
 
-const Beer = ({beer}) => (
+const Beer = ({beer, toggle}) => (
     <Card>
       <CardBody>
-        <Title>
-          <h2 class='clamped-title'>{beer.name}</h2>
-          <h4>{beer.tagline}</h4>
-        </Title>
-        <p class='clamped'>{beer.description}</p>
-				<Details>
-					<div>
-						<h5>ABV</h5>
-						<Value class='text-center'>{beer.abv}%</Value>
+				<div style='display: grid;'>
+	        <Title>
+	          <h2 class='clamped-title'>{beer.name}</h2>
+	          <h4>{beer.tagline}</h4>
+	        </Title>
+	        <p class='clamped'>{beer.description}</p>
+					<Details>
+						<div>
+							<h5>ABV</h5>
+							<Value class='text-center'>{beer.abv}%</Value>
+						</div>
+						<div>
+							<h5>IBU</h5>
+							<Value class='text-center'>{beer.ibu}</Value>
+						</div>
+						<div>
+							<h5>SRM</h5>
+							<Value class='text-center'>{beer.srm}</Value>
+						</div>
+					</Details>
+					<div class='btn-wrapper'/*style='position: absolute; bottom: 0; width: 100%; margin-bottom: 1em; text-align: center;'*/>
+						<Button onClick={toggle}>method</Button>
 					</div>
-					<div>
-						<h5>IBU</h5>
-						<Value class='text-center'>{beer.ibu}</Value>
-					</div>
-					<div>
-						<h5>SRM</h5>
-						<Value class='text-center'>{beer.srm}</Value>
-					</div>
-				</Details>
-				<div style='position: absolute; bottom: 0; width: 100%; margin-bottom: 1em; text-align: center;'>
-					<Button>method</Button>
 				</div>
+				<Image image={beer.image_url} />
       </CardBody>
     </Card>
 )
-/*const Beer = ({beers, i}) => (
-  <div>
-    <Card>
-      <div class='clamp'>
-        <Id>#{beers[i].id}</Id>
-        <h2 style='font-family: Montserrat, sans-serif;'>{beers[i].name}</h2>
-        <strong>{beers[i].tagline}</strong>
-        <p class='clamp'>{beers[i].description}</p>
-      </div>
-      <Details>
-        <div>
-          <strong>ABV: </strong>
-          <span>{beers[i].abv}</span>
-        </div>
-        <div>
-          <strong>IBU: </strong>
-          <span>{beers[i].ibu}</span>
-        </div>
-        <div>
-          <strong>SRM: </strong>
-          <span>{beers[i].srm}</span>
-        </div>
-      </Details>
-      <div class='btn-wrapper'>
-        <Button>Method</Button>
-      </div>
-    </Card>
-  </div>
-)*/
 
 export default Beer

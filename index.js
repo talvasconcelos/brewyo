@@ -6,6 +6,7 @@ import { fetchBeers } from './lib/api'
 
 import SwipeContainer from './components/swipe'
 import Beer from './components/beer'
+import Recipe from './components/recipe'
 
 const data = require('./data.json')
 
@@ -29,15 +30,26 @@ export default class App extends Component {
 	constructor () {
     super()
 		this.swipeHandler = this.swipeHandler.bind(this)
+		this.toggleRecipe = this.toggleRecipe.bind(this)
   }
 
 	state = {
+		fetchPage: 1,
 		beers: [],
-		currentBeer: 0
+		currentBeer: 10,
+		showRecipe: true
+	}
+
+	loadMore = () => {
+		this.setState({fetchPage: this.state.fetchPage + 1})
+		fetchBeers(`beers?page=${this.state.fetchPage}`)
+			.then(r => this.setState({ beers: [...this.state.beers, ...r], beerIndex: this.state.beerIndex + 1 }))
 	}
 
 	nextBeer() {
-		this.setState(this.state.currentBeer++)
+		if(this.state.currentBeer === this.state.beers.length - 1)
+			this.loadMore()
+		this.state.currentBeer < 234 ? this.setState(this.state.currentBeer++) : null
 	}
 
 	prevBeer() {
@@ -46,8 +58,6 @@ export default class App extends Component {
 
 	scrollHandler = (e) => {
 		e.deltaY < 0 ? this.prevBeer() : this.nextBeer()
-		// if(this.state.beerIndex === this.state.beers.length - 1 && this.state.beerIndex < 234)
-		// 	this.loadMore()
 		//e.deltaY < 0 ? this.state.beerIndex == 0 ? null : this.setState({beerIndex: this.state.beerIndex - 1}) : this.state.beerIndex == this.state.beers.length - 1 ? null : this.setState({beerIndex: this.state.beerIndex + 1})
 	}
 
@@ -56,23 +66,33 @@ export default class App extends Component {
 		direction === 'up' ? this.nextBeer() : null
 	}
 
-	componentDidMount() {
-		this.setState({beers: data})
+	toggleRecipe = () => {
+		this.setState({showRecipe: !this.state.showRecipe})
 	}
 
-	render({}, {beers, currentBeer}) {
+	componentDidMount() {
+		this.setState({beers: data})
+		//fetchBeers(`beers?page=${this.state.fetchPage}`)
+		//	.then(r => this.setState({ beers: r }))
+	}
+
+	render({}, {beers, currentBeer, showRecipe}) {
 		return (
 			<div id="app">
-				<SliderContainer pos={currentBeer * -100 + 'vh'} onWheel={this.scrollHandler}>
-					<SwipeContainer onSwipe={this.swipeHandler}>
-						<Slider>
+				{!showRecipe &&
+					<SliderContainer pos={currentBeer * -100 + 'vh'} onWheel={this.scrollHandler}>
+						<SwipeContainer onSwipe={this.swipeHandler}>
+							<Slider>
 								{beers.map(beer => (
-									<Beer beer={beer} />
+									<Beer beer={beer} toggle={this.toggleRecipe}/>
 								))}
-							{/* <pre>{JSON.stringify({beers}, null, 2)}</pre> */}
-						</Slider>
-					</SwipeContainer>
-				</SliderContainer>
+								{/* <pre>{JSON.stringify({beers}, null, 2)}</pre> */}
+							</Slider>
+						</SwipeContainer>
+					</SliderContainer>}
+					{beers.length && showRecipe &&
+						<Recipe beer={beers[currentBeer]}/>
+					}
 			</div>
 		)
 	}

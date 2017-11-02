@@ -106,19 +106,9 @@ sub {
 	width: 100%;
 }
 
-
-.wrapper {
-	display: flex;
-	align-items: center;
-	padding-bottom: 2em;
-	width: 100%;
-	min-height: 100vh;
-	background: linear-gradient(-270deg, #136a8a, #267871);
-}
-
 .btn-wrapper {
 	display: flex;
-	justify-content: center;
+	align-items: flex-end;
 }
 
 .navigate {
@@ -167,4 +157,42 @@ sub {
 	.clamped {
 		-webkit-line-clamp: 9;
 	}
+}
+
+
+ul.tabs {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: #fff;
+	display: flex;
+	justify-content: space-around;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-bottom: 1px gainsboro solid;
+	box-shadow: 0 0 2em 1em rgba(183,183,183,0.3);
+}
+
+.tab {
+	display: block;
+	padding: 1em;
+	cursor: pointer;
+}
+
+.link {
+	text-transform: uppercase;
+	font-weight: bold;
+	background: #fff;
+	letter-spacing: 1px;
+	border: none;
+	border-radius: 2px;
+	transition: all 0.3s ease;
+}
+
+.active {
+	color: #fff;
+	background: tomato;
+	padding: 0.5em 0.4em;
 }

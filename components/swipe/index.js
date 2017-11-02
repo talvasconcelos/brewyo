@@ -8,7 +8,6 @@ export default class SwipeRecognizer extends Component {
   }
 
   componentDidMount () {
-    console.log(this.base)
     this.base.addEventListener('touchstart', this.capture)
     this.base.addEventListener('touchmove', this.capture)
     this.base.addEventListener('touchend', this.compute)
